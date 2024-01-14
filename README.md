@@ -1,6 +1,5 @@
-- 👋 Hi, I’m @prashx1908
-- 👀 Budding Web developer
-- 🌱 I’m currently learning c++
+- 👋 Hi, I’m Prashanth
+- 👀 Budding Machine Learning Engineer
 - 💞️ I’m looking to collaborate on https://www.linkedin.com/in/prashanth-g-399225202/
 - 📫 How to reach me - prashx1908@gmail.com
 
