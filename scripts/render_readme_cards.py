@@ -192,7 +192,7 @@ def activity(days):
     return wrap(w, h, b)
 
 
-def tile(name, color, count, label, sub, arrow_delay=0):
+def tile(name, color, count, label, sub, arrow_delay=0, suffix=""):
     w, h = 270, 190
     c = f'<g {anim("swing", 0.2 + arrow_delay, 0.9, "cubic-bezier(.2,.8,.3,1)")}>'
     c += f'<rect x=".5" y=".5" width="{w-1}" height="{h-1}" rx="12" fill="{PANEL}" stroke="{color}" stroke-opacity=".5"/>'
@@ -203,7 +203,7 @@ def tile(name, color, count, label, sub, arrow_delay=0):
     c += f'<circle cx="{w-30}" cy="26" r="12" fill="none" stroke="{color}" {ring}/>'
     # count-up via SMIL frames
     if STATIC:
-        c += f'<text x="20" y="104" font-size="54" font-weight="700" fill="{FG}">{count}</text>'
+        c += f'<text x="20" y="104" font-size="54" font-weight="700" fill="{FG}">{count}{suffix}</text>'
     else:
         steps = 12
         t0 = 0.9 + arrow_delay
@@ -211,7 +211,7 @@ def tile(name, color, count, label, sub, arrow_delay=0):
             v = round(count * i / steps)
             last = i == steps
             begin = t0 + i * 0.06
-            c += (f'<text x="20" y="104" font-size="54" font-weight="700" fill="{FG}" opacity="0">{v}'
+            c += (f'<text x="20" y="104" font-size="54" font-weight="700" fill="{FG}" opacity="0">{v}{suffix if last else ""}'
                   f'<set attributeName="opacity" to="1" begin="{begin:.2f}s" fill="freeze"/>'
                   + ("" if last else f'<set attributeName="opacity" to="0" begin="{begin+0.06:.2f}s" fill="freeze"/>')
                   + '</text>')
@@ -263,9 +263,9 @@ def main():
     days = load()
     cards = {
         "hero": hero(), "graph": graph(days), "activity": activity(days),
-        "build": tile("BUILD", GREEN, 6, "projects shipped", "ML apps, Django, APIs"),
-        "hackathons": tile("COMPETE", AMBER, 6, "hackathons", "1 win · 4 finalist · 1 top 20", 0.25),
-        "learn": tile("LEARN", CYAN, 12, "certificates", "ML, NLP, design, cloud", 0.5),
+        "build": tile("BUILD", GREEN, 20, "projects shipped", "ML apps, Django, APIs", suffix="+"),
+        "hackathons": tile("COMPETE", AMBER, 8, "hackathons", "1 win · finalist · top 20", 0.25),
+        "learn": tile("LEARN", CYAN, 15, "certificates", "ML, NLP, design, cloud", 0.5),
         "balancepro": repo("BalancePro", ["Work-life balance prediction with a",
                            "Random Forest model, 91% accuracy,", "served through a Flask web app."],
                            ["Flask", "scikit-learn", "Python"], "#e34c26", "HTML"),
